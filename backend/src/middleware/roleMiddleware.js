@@ -25,4 +25,4 @@ const allowRoles = (...roles) => {
     next();
   };
 };
-module.exports = allowRoles;
+module.exports = { allowRoles };

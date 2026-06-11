@@ -3,10 +3,9 @@ const cors = require("cors");
 require("dotenv").config();
 // Import middleware
 const errorHandler = require("./src/middleware/errorHandler");
-// Import routes (akan ditambahkan seiring pengembangan)
-// const authRoutes = require('./src/routes/authRoutes');
-// Import routes
-const authRoutes = require("./src/routes/authRoutes");
+// Import all routes
+const setupRoutes = require("./src/routes");
+
 const app = express();
 // ========================
 // Middleware Global
@@ -17,8 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // ========================
 // Mount Routes
 // ========================
-// app.use('/api/auth', authRoutes);
-app.use("/api/auth", authRoutes);
+setupRoutes(app);
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({
