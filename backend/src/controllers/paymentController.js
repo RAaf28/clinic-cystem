@@ -1,5 +1,5 @@
 const { pool } = require('../config/db');
-const cache = require('../config/cache');
+const { cache } = require('../config/cache');
 const { successResponse, errorResponse } = require('../utils/responseHelper');
 
 /**
