@@ -31,7 +31,6 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401) {
         localStorage.removeItem('klinik_token');
-        // Redirect will be handled by the router/auth context, but we could do window.location.href = '/login' here
       } else if (error.response.status === 403) {
         console.warn('Akses ditolak');
       }

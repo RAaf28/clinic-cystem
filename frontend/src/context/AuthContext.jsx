@@ -6,7 +6,7 @@ const AuthContext = createContext();
 const initialState = {
   user: null,
   token: localStorage.getItem('klinik_token') || null,
-  isLoading: true, // start as true to check token on mount
+  isLoading: true, // mulai sebagai true untuk memeriksa token saat mount
   isAuthenticated: false,
   error: null,
 };
@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }) => {
     
     dispatch({ type: 'AUTH_LOADING' });
     try {
-      // getMe will use the token from localStorage via axios interceptor
       const response = await authApi.getMe();
       dispatch({
         type: 'AUTH_SUCCESS',
@@ -78,8 +77,6 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'AUTH_LOADING' });
     try {
       const response = await authApi.login(email, password);
-      // Assuming response has format { success: true, data: { token, user: {...} } } based on standard
-      // But AGENTS.md says login returns { token, user: { ... } } directly
       const token = response.data?.token || response.token;
       const user = response.data?.user || response.user;
       

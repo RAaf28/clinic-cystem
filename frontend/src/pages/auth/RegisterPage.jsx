@@ -61,11 +61,6 @@ const RegisterPage = () => {
     <main className="flex flex-col lg:flex-row min-h-screen bg-canvas-white">
       {/* Left Side: Editorial Content */}
       <section className="lg:w-1/2 w-full flex flex-col justify-center gallery-airy-padding relative overflow-hidden bg-surface-container-lowest">
-        <div className="absolute top-12 left-margin-edge">
-          <span className="text-headline-lg tracking-tighter text-primary">Clynic</span>
-          <p className="text-label-sm text-muted-slate mt-2 tracking-widest uppercase">Portal Pasien</p>
-        </div>
-        
         <div className="max-w-[65ch] space-y-12 z-10">
           <h1 className="text-display-lg leading-tight text-on-background">
             Akses kesehatan, dalam genggaman.

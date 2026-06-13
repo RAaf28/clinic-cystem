@@ -1,13 +1,13 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import PrivateRoute from './components/common/PrivateRoute';
+import Navbar from './components/common/Navbar';
 
 // Auth Pages
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 
-// Placeholder Pages for now
 const DashboardPage = () => {
   const { user, logout } = useAuth();
   return (
@@ -32,8 +32,10 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Routes>
-      {/* Public Routes */}
+    <>
+      <Navbar />
+      <Routes>
+        {/* Public Routes */}
       <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} />
       <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <RegisterPage />} />
       <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/dashboard" /> : <ForgotPasswordPage />} />
@@ -56,6 +58,7 @@ const AppRoutes = () => {
       {/* 404 Route */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 };
 

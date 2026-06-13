@@ -13,13 +13,13 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setValidationError(''); // Clear validation on typing
+    setValidationError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Basic validation
+    // Validasi dasar
     if (!formData.email || !formData.password) {
       setValidationError('Semua kolom wajib diisi');
       return;
@@ -33,20 +33,15 @@ const LoginPage = () => {
       await login(formData.email, formData.password);
       navigate('/dashboard');
     } catch (err) {
-      // Error handled by context and displayed below
+      // Error ditangani oleh context dan ditampilkan di bawah
     }
   };
 
   return (
     <main className="flex flex-col lg:flex-row min-h-screen bg-canvas-white">
-      {/* Left Side: Editorial Content */}
+      {/* Sisi Kiri: Konten Editorial */}
       <section className="lg:w-1/2 w-full flex flex-col justify-center gallery-airy-padding relative overflow-hidden">
-        {/* Branding */}
-        <div className="absolute top-12 left-margin-edge">
-          <span className="text-headline-lg tracking-tighter text-primary">Clynic</span>
-        </div>
-        
-        {/* Content Cluster */}
+        {/* Klaster Konten */}
         <div className="max-w-[65ch] space-y-12 z-10">
           <div className="inline-flex items-center gap-3 px-4 py-2 bg-surface-container-low rounded-full border border-whisper-border">
             <span className="relative flex h-3 w-3">
@@ -69,12 +64,10 @@ const LoginPage = () => {
             Clynic menghubungkan tenaga medis dan pasien dalam satu platform yang aman. Masuk ke sistem untuk mengelola rekam medis, janji temu, dan data klinik dengan efisiensi tinggi.
           </p>
         </div>
-        
-        {/* Background Aesthetic (Subtle) */}
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       </section>
 
-      {/* Right Side: Auth Container */}
+      {/* Sisi Kanan: Kontainer Auth */}
       <section className="lg:w-1/2 w-full flex items-center justify-center gallery-airy-padding bg-background/30">
         <div className="w-full max-w-xl bg-pure-surface rounded-xl border border-whisper-border whisper-shadow p-12 lg:p-16">
           <div className="mb-12">
@@ -99,7 +92,7 @@ const LoginPage = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2">
               <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="email">
-                Email Address
+                Alamat Email
               </label>
               <input 
                 id="email" 
