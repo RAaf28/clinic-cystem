@@ -24,7 +24,6 @@ const ForgotPasswordPage = () => {
       <section className="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-margin-edge py-section-gap relative overflow-hidden bg-surface-container-lowest">
         <div className="max-w-xl z-10">
           <div className="mb-12">
-            <span className="text-label-md text-primary uppercase tracking-widest mb-4 block">Security Framework</span>
             <h1 className="text-display-lg text-on-background leading-tight">
               Akses kembali,
               <br />
@@ -34,11 +33,6 @@ const ForgotPasswordPage = () => {
           <p className="text-body-lg text-on-surface-variant max-w-md opacity-80">
             Clynic memastikan proses pemulihan akses tetap mematuhi standar keamanan medis. Tautan reset hanya akan dikirimkan ke email yang terdaftar di sistem.
           </p>
-
-          <div className="mt-16 flex items-center gap-4">
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-            <span className="text-label-sm text-outline">NODE_RECOVERY_PROTOCOL_V2.4</span>
-          </div>
         </div>
 
         {/* Ambient Decorative Elements */}

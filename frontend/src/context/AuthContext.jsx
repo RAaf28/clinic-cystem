@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'AUTH_LOADING' });
     try {
       const response = await authApi.register(userData);
-      dispatch({ type: 'AUTH_LOADING' }); // Reset loading after success, let page handle redirect
+      dispatch({ type: 'AUTH_LOGOUT' });
       return response;
     } catch (error) {
       const errMsg = error?.message || 'Registrasi gagal. Coba beberapa saat lagi.';

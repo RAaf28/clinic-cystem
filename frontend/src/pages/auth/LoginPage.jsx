@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, isLoading, error } = useAuth();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [validationError, setValidationError] = useState('');
+  const successMessage = location.state?.message;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,28 +59,15 @@ const LoginPage = () => {
           </div>
           
           <h1 className="text-display-lg leading-tight text-on-background">
-            Layanan kesehatan,
-            <span className="inline-block w-16 h-10 bg-primary-container/20 rounded-lg align-middle mx-3 shadow-sm flex items-center justify-center text-primary">
+            Layanan kesehatan, digital dan terpadu.
+            <span className="inline-flex w-16 h-10 bg-primary-container/20 rounded-lg align-middle ml-3 shadow-sm items-center justify-center text-primary">
               <span className="material-symbols-outlined text-3xl">ecg_heart</span>
-            </span> 
-            <br />
-            digital dan terpadu.
+            </span>
           </h1>
           
           <p className="text-body-lg text-on-surface-variant">
             Clynic menghubungkan tenaga medis dan pasien dalam satu platform yang aman. Masuk ke sistem untuk mengelola rekam medis, janji temu, dan data klinik dengan efisiensi tinggi.
           </p>
-          
-          <div className="pt-8 flex gap-12">
-            <div className="flex flex-col gap-1">
-              <span className="text-label-sm text-muted-slate uppercase">Security Level</span>
-              <span className="text-label-md text-primary">ENCRYPTED L3</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-label-sm text-muted-slate uppercase">Akses Role</span>
-              <span className="text-label-md text-primary">Multi-Layered</span>
-            </div>
-          </div>
         </div>
         
         {/* Background Aesthetic (Subtle) */}
@@ -92,6 +81,13 @@ const LoginPage = () => {
             <h2 className="text-headline-md text-on-surface mb-2">Selamat Datang</h2>
             <p className="text-body-md text-on-surface-variant">Masukkan kredensial Anda untuk mengakses sistem Clynic.</p>
           </div>
+
+          {successMessage && (
+            <div className="mb-6 p-4 bg-primary-container/10 text-on-primary-container rounded-lg flex items-start gap-3 border border-primary-container/20">
+              <span className="material-symbols-outlined shrink-0 mt-0.5 text-primary">check_circle</span>
+              <p className="text-body-md font-medium">{successMessage}</p>
+            </div>
+          )}
 
           {(error || validationError) && (
             <div className="mb-6 p-4 bg-error-container text-on-error-container rounded-lg flex items-start gap-3">
@@ -181,10 +177,6 @@ const LoginPage = () => {
               </div>
             </div>
           </form>
-
-          <div className="mt-16 pt-8 border-t border-whisper-border flex flex-wrap gap-6 justify-center">
-            <span className="text-label-sm text-muted-slate">© 2024 Clynic Systems. All rights reserved.</span>
-          </div>
         </div>
       </section>
     </main>

@@ -58,43 +58,36 @@ const RegisterPage = () => {
   };
 
   return (
-    <main className="min-h-screen flex flex-col md:flex-row bg-canvas-white overflow-x-hidden">
-      {/* Left Side: Clinical Visual Editorial */}
-      <aside className="w-full md:w-1/2 min-h-[30vh] md:min-h-screen p-8 md:p-16 flex flex-col justify-between relative bg-surface-container-lowest overflow-hidden">
-        <div className="z-10">
-          <h1 className="text-headline-lg tracking-tighter text-primary">Clynic</h1>
+    <main className="flex flex-col lg:flex-row min-h-screen bg-canvas-white">
+      {/* Left Side: Editorial Content */}
+      <section className="lg:w-1/2 w-full flex flex-col justify-center gallery-airy-padding relative overflow-hidden bg-surface-container-lowest">
+        <div className="absolute top-12 left-margin-edge">
+          <span className="text-headline-lg tracking-tighter text-primary">Clynic</span>
           <p className="text-label-sm text-muted-slate mt-2 tracking-widest uppercase">Portal Pasien</p>
         </div>
         
-        <div className="z-10 max-w-xl my-8 md:my-0">
-          <h2 className="text-display-lg text-on-surface leading-tight">
-            Akses kesehatan,
-            <span className="inline-block align-middle mx-3 bg-primary-container/20 px-4 py-2 rounded-xl text-primary shadow-sm">
-              <span className="material-symbols-outlined text-4xl">medical_information</span>
-            </span> 
-            dalam genggaman.
-          </h2>
-          <p className="text-body-lg text-on-surface-variant mt-6">
+        <div className="max-w-[65ch] space-y-12 z-10">
+          <h1 className="text-display-lg leading-tight text-on-background">
+            Akses kesehatan, dalam genggaman.
+            <span className="inline-flex w-16 h-10 bg-primary-container/20 rounded-lg align-middle ml-3 shadow-sm items-center justify-center text-primary">
+              <span className="material-symbols-outlined text-3xl">medical_information</span>
+            </span>
+          </h1>
+          
+          <p className="text-body-lg text-on-surface-variant">
             Daftar sebagai pasien untuk mengelola janji temu dokter, melihat riwayat rekam medis, dan mengakses tagihan klinik secara transparan.
           </p>
         </div>
 
-        <div className="absolute -right-20 bottom-1/4 w-80 h-80 opacity-5 pointer-events-none">
-          <div className="grid grid-cols-4 grid-rows-4 gap-4 w-full h-full">
-            <div className="bg-primary col-span-2 row-span-2 rounded-xl"></div>
-            <div className="border border-primary rounded-full"></div>
-            <div className="bg-primary-container rounded-lg"></div>
-            <div className="bg-primary rounded-xl col-span-3"></div>
-          </div>
-        </div>
-      </aside>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+      </section>
 
       {/* Right Side: Auth Form Container */}
-      <section className="w-full md:w-1/2 min-h-screen bg-canvas-white flex items-center justify-center p-6 md:p-12">
-        <div className="w-full max-w-lg bg-pure-surface rounded-xl whisper-shadow border border-whisper-border p-8 md:p-12 flex flex-col my-8">
-          <header className="mb-8">
+      <section className="lg:w-1/2 w-full flex items-center justify-center gallery-airy-padding bg-background/30">
+        <div className="w-full max-w-xl bg-pure-surface rounded-xl border border-whisper-border whisper-shadow p-12 lg:p-16">
+          <header className="mb-12">
             <h2 className="text-headline-md text-on-surface mb-2">Registrasi Pasien</h2>
-            <p className="text-body-md text-steel-secondary">Lengkapi data diri Anda untuk membuat akun Clynic.</p>
+            <p className="text-body-md text-on-surface-variant">Lengkapi data diri Anda untuk membuat akun Clynic.</p>
           </header>
 
           {(error || validationError) && (
@@ -104,9 +97,9 @@ const RegisterPage = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="group">
-              <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="name">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="name">
                 Nama Lengkap
               </label>
               <input 
@@ -117,8 +110,8 @@ const RegisterPage = () => {
               />
             </div>
 
-            <div className="group">
-              <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="email">
+            <div className="space-y-2">
+              <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="email">
                 Email Aktif
               </label>
               <input 
@@ -129,9 +122,9 @@ const RegisterPage = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="group">
-                <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="password">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="password">
                   Password
                 </label>
                 <input 
@@ -141,8 +134,8 @@ const RegisterPage = () => {
                   className="input-clinical" disabled={isLoading}
                 />
               </div>
-              <div className="group">
-                <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="confirmPassword">
+              <div className="space-y-2">
+                <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="confirmPassword">
                   Konfirmasi Password
                 </label>
                 <input 
@@ -154,8 +147,8 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            <div className="group">
-              <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="date_of_birth">
+            <div className="space-y-2">
+              <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="date_of_birth">
                 Tanggal Lahir
               </label>
               <input 
@@ -165,8 +158,8 @@ const RegisterPage = () => {
               />
             </div>
 
-            <div className="group">
-              <label className="block text-label-md text-on-surface-variant mb-2 uppercase tracking-wider" htmlFor="address">
+            <div className="space-y-2">
+              <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="address">
                 Alamat Lengkap
               </label>
               <textarea 
@@ -177,26 +170,35 @@ const RegisterPage = () => {
               ></textarea>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-4 space-y-6">
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="btn-primary w-full py-4 text-label-md rounded-lg spring-interaction hover:opacity-90 active:scale-[0.98] transition-all bg-primary-container text-on-primary-container flex items-center justify-center gap-3"
+                className="btn-primary w-full py-5 text-label-md rounded-lg spring-interaction hover:opacity-90 active:scale-[0.98] transition-all bg-primary text-on-primary flex items-center justify-center gap-2"
               >
-                {isLoading ? 'Memproses...' : 'Buat Akun Pasien'}
-                {!isLoading && <span className="material-symbols-outlined text-xl">arrow_forward</span>}
+                {isLoading ? (
+                  <>
+                    <span className="material-symbols-outlined animate-spin">refresh</span>
+                    <span>Memproses...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Buat Akun Pasien</span>
+                    <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+                  </>
+                )}
               </button>
+
+              <div className="flex items-center justify-center">
+                <p className="text-body-md text-on-surface-variant">
+                  Sudah memiliki akun?
+                  <Link to="/login" className="text-primary font-bold hover:underline ml-2 transition-all">
+                    Masuk di sini
+                  </Link>
+                </p>
+              </div>
             </div>
           </form>
-
-          <footer className="mt-8 pt-6 border-t border-whisper-border text-center">
-            <p className="text-body-md text-steel-secondary">
-              Sudah memiliki akun? 
-              <Link to="/login" className="text-primary font-bold hover:underline ml-2 transition-all">
-                Masuk di sini
-              </Link>
-            </p>
-          </footer>
         </div>
       </section>
     </main>
