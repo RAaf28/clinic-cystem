@@ -1,0 +1,339 @@
+@import "tailwindcss";
+
+/* ===================================================
+   CLYNIC DESIGN SYSTEM — Tailwind CSS v4 Theme
+   Based on Stitch "Gallery Minimalist" design tokens
+   =================================================== */
+
+@theme {
+  /* --- Color Palette --- */
+  --color-background: #f4fbf4;
+  --color-on-background: #161d19;
+  --color-surface: #f4fbf4;
+  --color-surface-dim: #d4dcd5;
+  --color-surface-bright: #f4fbf4;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eef6ee;
+  --color-surface-container: #e8f0e9;
+  --color-surface-container-high: #e3eae3;
+  --color-surface-container-highest: #dde4dd;
+  --color-surface-variant: #dde4dd;
+  --color-surface-tint: #006c49;
+  --color-on-surface: #161d19;
+  --color-on-surface-variant: #3c4a42;
+  --color-inverse-surface: #2b322d;
+  --color-inverse-on-surface: #ebf3eb;
+
+  --color-primary: #006c49;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #10b981;
+  --color-on-primary-container: #00422b;
+  --color-primary-fixed: #6ffbbe;
+  --color-primary-fixed-dim: #4edea3;
+  --color-inverse-primary: #4edea3;
+  --color-on-primary-fixed: #002113;
+  --color-on-primary-fixed-variant: #005236;
+
+  --color-secondary: #5f5e61;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #e4e1e6;
+  --color-on-secondary-container: #656467;
+  --color-secondary-fixed: #e4e1e6;
+  --color-secondary-fixed-dim: #c8c5ca;
+  --color-on-secondary-fixed: #1b1b1e;
+  --color-on-secondary-fixed-variant: #47464a;
+
+  --color-tertiary: #a43a3a;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #fc7c78;
+  --color-on-tertiary-container: #711419;
+  --color-tertiary-fixed: #ffdad7;
+  --color-tertiary-fixed-dim: #ffb3af;
+  --color-on-tertiary-fixed: #410005;
+  --color-on-tertiary-fixed-variant: #842225;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-outline: #6c7a71;
+  --color-outline-variant: #bbcabf;
+
+  --color-canvas-white: #F9FAFB;
+  --color-pure-surface: #FFFFFF;
+  --color-steel-secondary: #71717A;
+  --color-muted-slate: #94A3B8;
+  --color-whisper-border: rgba(226, 232, 240, 0.5);
+  --color-deep-rose: #E11D48;
+
+  /* --- Typography --- */
+  --font-geist: 'Geist', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+
+  /* --- Border Radius --- */
+  --radius-DEFAULT: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  /* --- Spacing (Design System) --- */
+  --spacing-margin-edge: 4rem;
+  --spacing-gutter-grid: 2rem;
+  --spacing-section-gap: 8rem;
+  --spacing-bento-gap: 1.5rem;
+}
+
+/* ===================================================
+   BASE STYLES
+   =================================================== */
+
+body {
+  font-family: var(--font-geist);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  background-color: var(--color-canvas-white);
+  color: var(--color-on-background);
+}
+
+/* ===================================================
+   TYPOGRAPHY UTILITY CLASSES
+   =================================================== */
+
+.text-display-xl {
+  font-family: var(--font-geist);
+  font-size: 80px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.text-display-lg {
+  font-family: var(--font-geist);
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.text-headline-lg {
+  font-family: var(--font-geist);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.text-headline-md {
+  font-family: var(--font-geist);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.text-body-lg {
+  font-family: var(--font-geist);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.text-body-md {
+  font-family: var(--font-geist);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.text-label-md {
+  font-family: var(--font-jetbrains);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+.text-label-sm {
+  font-family: var(--font-jetbrains);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+/* ===================================================
+   DESIGN SYSTEM COMPONENT CLASSES
+   =================================================== */
+
+/* Whisper Shadow — wide-spreading, clinical diffusion */
+.whisper-shadow {
+  box-shadow: 0 40px 40px -15px rgba(0, 0, 0, 0.05);
+}
+
+/* Emerald Focus Ring */
+.emerald-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #10b981;
+}
+
+/* Active Press Micro-interaction */
+.btn-active-press:active {
+  transform: translateY(1px);
+}
+
+/* Spring-based interaction */
+.spring-interaction {
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+.spring-interaction:active {
+  transform: translateY(1px);
+}
+
+/* Active Dot Pulse Animation */
+.active-dot-pulse {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.15); }
+}
+
+/* Gallery Airy Padding */
+.gallery-airy-padding {
+  padding: clamp(3rem, 8vw, 6rem);
+}
+
+/* Material Symbols config */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===================================================
+   FORM INPUT STYLES
+   =================================================== */
+
+.input-clinical {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-canvas-white);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 0.5rem;
+  font-family: var(--font-geist);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--color-on-surface);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-clinical::placeholder {
+  color: var(--color-outline-variant);
+}
+
+.input-clinical:focus {
+  border-color: var(--color-primary-container);
+  box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--color-primary-container);
+}
+
+/* ===================================================
+   BUTTON STYLES
+   =================================================== */
+
+.btn-primary {
+  width: 100%;
+  padding: 1.25rem;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-jetbrains);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-on-primary-fixed-variant);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===================================================
+   LOADING SPINNER
+   =================================================== */
+
+@keyframes clinical-spin {
+  to { transform: rotate(360deg); }
+}
+
+.clinical-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: clinical-spin 0.6s linear infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out;
+}
+
+/* ===================================================
+   RESPONSIVE TYPOGRAPHY
+   =================================================== */
+
+@media (max-width: 768px) {
+  .text-display-xl {
+    font-size: 48px;
+  }
+  .text-display-lg {
+    font-size: 36px;
+  }
+  .text-headline-lg {
+    font-size: 28px;
+  }
+  .text-headline-md {
+    font-size: 24px;
+  }
+}

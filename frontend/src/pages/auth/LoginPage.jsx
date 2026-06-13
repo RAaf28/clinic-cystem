@@ -1,0 +1,179 @@
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login, isLoading, error } = useAuth();
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [validationError, setValidationError] = useState('');
+  const successMessage = location.state?.message;
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setValidationError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validasi dasar
+    if (!formData.email || !formData.password) {
+      setValidationError('Semua kolom wajib diisi');
+      return;
+    }
+    if (formData.password.length < 6) {
+      setValidationError('Password minimal 6 karakter');
+      return;
+    }
+
+    try {
+      await login(formData.email, formData.password);
+      navigate('/dashboard');
+    } catch (err) {
+      // Error ditangani oleh context dan ditampilkan di bawah
+    }
+  };
+
+  return (
+    <main className="flex flex-col lg:flex-row min-h-screen bg-canvas-white">
+      {/* Sisi Kiri: Konten Editorial */}
+      <section className="lg:w-1/2 w-full flex flex-col justify-center gallery-airy-padding relative overflow-hidden">
+        {/* Klaster Konten */}
+        <div className="max-w-[65ch] space-y-12 z-10">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-surface-container-low rounded-full border border-whisper-border">
+            <span className="relative flex h-3 w-3">
+              <span className="active-dot-pulse absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-container"></span>
+            </span>
+            <span className="text-label-md text-on-surface-variant uppercase tracking-widest">
+              Sistem Informasi Klinik Modern
+            </span>
+          </div>
+          
+          <h1 className="text-display-lg leading-tight text-on-background">
+            Layanan kesehatan, digital dan terpadu.
+            <span className="inline-flex w-16 h-10 bg-primary-container/20 rounded-lg align-middle ml-3 shadow-sm items-center justify-center text-primary">
+              <span className="material-symbols-outlined text-3xl">ecg_heart</span>
+            </span>
+          </h1>
+          
+          <p className="text-body-lg text-on-surface-variant">
+            Clynic menghubungkan tenaga medis dan pasien dalam satu platform yang aman. Masuk ke sistem untuk mengelola rekam medis, janji temu, dan data klinik dengan efisiensi tinggi.
+          </p>
+        </div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+      </section>
+
+      {/* Sisi Kanan: Kontainer Auth */}
+      <section className="lg:w-1/2 w-full flex items-center justify-center gallery-airy-padding bg-background/30">
+        <div className="w-full max-w-xl bg-pure-surface rounded-xl border border-whisper-border whisper-shadow p-12 lg:p-16">
+          <div className="mb-12">
+            <h2 className="text-headline-md text-on-surface mb-2">Selamat Datang</h2>
+            <p className="text-body-md text-on-surface-variant">Masukkan kredensial Anda untuk mengakses sistem Clynic.</p>
+          </div>
+
+          {successMessage && (
+            <div className="mb-6 p-4 bg-primary-container/10 text-on-primary-container rounded-lg flex items-start gap-3 border border-primary-container/20">
+              <span className="material-symbols-outlined shrink-0 mt-0.5 text-primary">check_circle</span>
+              <p className="text-body-md font-medium">{successMessage}</p>
+            </div>
+          )}
+
+          {(error || validationError) && (
+            <div className="mb-6 p-4 bg-error-container text-on-error-container rounded-lg flex items-start gap-3">
+              <span className="material-symbols-outlined shrink-0 mt-0.5">error</span>
+              <p className="text-body-md font-medium">{validationError || error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-2">
+              <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="email">
+                Alamat Email
+              </label>
+              <input 
+                id="email" 
+                name="email" 
+                type="email" 
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="nama@klinik.com"
+                className="input-clinical"
+                disabled={isLoading}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <label className="block text-label-md text-on-surface-variant uppercase tracking-wider" htmlFor="password">
+                  Password
+                </label>
+                <Link to="/forgot-password" className="text-label-sm text-primary hover:underline transition-all">
+                  Lupa Password?
+                </Link>
+              </div>
+              <div className="relative">
+                <input 
+                  id="password" 
+                  name="password" 
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="input-clinical pr-12"
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-slate hover:text-primary transition-colors"
+                  tabIndex="-1"
+                >
+                  <span className="material-symbols-outlined text-[20px]">
+                    {showPassword ? 'visibility_off' : 'visibility'}
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-6">
+              <button 
+                type="submit" 
+                disabled={isLoading}
+                className="btn-primary flex items-center justify-center gap-2 w-full py-5 text-label-md rounded-lg spring-interaction hover:opacity-90 active:scale-[0.98] transition-all bg-primary text-on-primary"
+              >
+                {isLoading ? (
+                  <>
+                    <span className="material-symbols-outlined animate-spin">refresh</span>
+                    <span>Memverifikasi...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Akses Dashboard</span>
+                    <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+                  </>
+                )}
+              </button>
+              
+              <div className="flex items-center justify-center">
+                <p className="text-body-md text-on-surface-variant">
+                  Pasien baru? 
+                  <Link to="/register" className="text-primary font-bold hover:underline ml-2">
+                    Daftar di sini
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default LoginPage;
