@@ -49,7 +49,7 @@ const LoginPage = () => {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-container"></span>
             </span>
             <span className="text-label-md text-on-surface-variant uppercase tracking-widest">
-              Sistem Informasi Klinik Modern
+              Sistem Informasi Klinik
             </span>
           </div>
           

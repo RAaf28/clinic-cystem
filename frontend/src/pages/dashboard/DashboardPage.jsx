@@ -96,6 +96,14 @@ const MetricCard = ({ label, value, sub, accent, icon, loading, children, linkTo
   return linkTo ? <Link to={linkTo}>{content}</Link> : content;
 };
 
+// ─── Helper: Get greeting based on time ──────────────────────────────────────
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good Morning,';
+  if (hour < 18) return 'Good Afternoon,';
+  return 'Good Evening,';
+};
+
 // ─── Main Dashboard Page ──────────────────────────────────────────────────────
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -214,7 +222,7 @@ const DashboardPage = () => {
         <header className="flex justify-between items-center h-18 px-10 py-4 bg-pure-surface border-b border-whisper-border sticky top-0 z-40">
           <div className="flex items-center gap-8">
             <span className="text-headline-md text-primary" style={{ fontSize: '22px' }}>
-              Clinic Administration
+              {getGreeting()} <span className="font-bold">{user?.name || 'Administrator'}</span>
             </span>
 
             {/* Search */}
@@ -287,7 +295,7 @@ const DashboardPage = () => {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-label-sm">
                 <span className="w-2 h-2 rounded-full bg-primary-container active-dot-pulse" />
-                SYSTEM ACTIVE • BACKEND CONNECTED
+                SYSTEM ONLINE
               </div>
 
               <h2 className="text-display-lg tracking-tight leading-tight" style={{ fontSize: '40px' }}>
@@ -301,10 +309,10 @@ const DashboardPage = () => {
 
               <div className="flex gap-4 flex-wrap">
                 <button
-                  id="btn-generate-report"
+                  id="btn-current-report"
                   className="px-8 py-3.5 bg-primary text-white rounded-xl text-label-md spring-interaction hover:bg-on-primary-fixed-variant transition-colors"
                 >
-                  Generate Report
+                  Current Report
                 </button>
                 <Link
                   to="/appointments"
@@ -344,10 +352,6 @@ const DashboardPage = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center gap-2 bg-pure-surface/80 backdrop-blur rounded-full px-4 py-2 whisper-shadow">
-                  <span className="w-2 h-2 bg-primary-container rounded-full active-dot-pulse" />
-                  <span className="text-label-sm text-primary">Database Terhubung — Data Live</span>
-                </div>
               </div>
             </div>
           </section>
@@ -355,7 +359,8 @@ const DashboardPage = () => {
           {/* ── Bento Metrics Grid ────────────────────────────────────────── */}
           <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-            {/* Total Pendapatan — spans 2 cols */}
+            {/* Total Pendapatan — spans 2 cols (Admin only) */}
+            {user?.role === 'Admin' && (
             <div className="sm:col-span-2 bg-pure-surface p-8 rounded-xl whisper-shadow border border-whisper-border flex flex-col justify-between h-52">
               {loadingStats ? (
                 <>
@@ -397,6 +402,7 @@ const DashboardPage = () => {
                 </>
               )}
             </div>
+            )}
 
             {/* Janji Aktif (Pending) */}
             <MetricCard
@@ -409,7 +415,8 @@ const DashboardPage = () => {
               linkTo="/appointments"
             />
 
-            {/* Total Transaksi */}
+            {/* Total Transaksi (Admin only) */}
+            {user?.role === 'Admin' && (
             <div className="bg-pure-surface p-8 rounded-xl whisper-shadow border border-whisper-border h-52 flex flex-col justify-between">
               {loadingStats ? (
                 <>
@@ -433,8 +440,10 @@ const DashboardPage = () => {
                 </>
               )}
             </div>
+            )}
 
-            {/* Pertumbuhan Bulan Ini — spans 2 */}
+            {/* Pertumbuhan Bulan Ini — spans 2 (Admin only) */}
+            {user?.role === 'Admin' && (
             <div className="sm:col-span-2 bg-pure-surface p-8 rounded-xl whisper-shadow border border-whisper-border h-52 flex flex-col justify-between relative overflow-hidden">
               {loadingStats ? (
                 <>
@@ -468,6 +477,7 @@ const DashboardPage = () => {
                 </>
               )}
             </div>
+            )}
 
             {/* Pasien Hari Ini */}
             <MetricCard
@@ -479,7 +489,8 @@ const DashboardPage = () => {
               linkTo="/appointments"
             />
 
-            {/* Stok Obat Menipis */}
+            {/* Stok Obat Menipis (Admin only) */}
+            {user?.role === 'Admin' && (
             <div className={`p-8 rounded-xl h-52 flex flex-col justify-between ${medicinesLowStock > 0 ? 'bg-error/5 border border-error/20' : 'bg-pure-surface border border-whisper-border whisper-shadow'}`}>
               <div>
                 <p className={`text-label-sm uppercase tracking-widest mb-2 ${medicinesLowStock > 0 ? 'text-error/80' : 'text-steel-secondary'}`}>
@@ -498,6 +509,7 @@ const DashboardPage = () => {
                 </Link>
               </div>
             </div>
+            )}
           </section>
 
           {/* ── Main Table + Sidebar ──────────────────────────────────────── */}
@@ -666,30 +678,6 @@ const DashboardPage = () => {
                 </Link>
               </div>
 
-              {/* System Status Card */}
-              <div className="bg-inverse-surface p-7 rounded-xl whisper-shadow flex items-center justify-between overflow-hidden relative">
-                <div className="z-10">
-                  <p className="text-label-sm opacity-60 uppercase tracking-widest mb-1">System Status</p>
-                  <p className="text-headline-md" style={{ fontSize: '22px', color: '#ebf3eb' }}>
-                    {error ? 'Error' : 'Optimal'}
-                  </p>
-                  <p className="text-body-md mt-1 opacity-70" style={{ color: '#ebf3eb' }}>
-                    {error ? 'Koneksi bermasalah' : 'Database Terhubung'}
-                  </p>
-                </div>
-                <div className="z-10">
-                  <span
-                    className="material-symbols-outlined text-4xl"
-                    style={{
-                      color: error ? '#fc7c78' : '#4edea3',
-                      animation: 'clinical-spin 3s linear infinite',
-                    }}
-                  >
-                    {error ? 'error' : 'refresh'}
-                  </span>
-                </div>
-                <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-              </div>
 
               {/* Quick Actions */}
               <div className="bg-pure-surface p-7 rounded-xl whisper-shadow border border-whisper-border">

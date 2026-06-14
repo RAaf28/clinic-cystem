@@ -48,7 +48,7 @@ const Sidebar = () => {
             </h1>
           </div>
           <p className="text-label-sm text-steel-secondary uppercase tracking-widest ml-9" style={{ fontSize: '9px' }}>
-            Medical Suite
+            Clinic System
           </p>
         </div>
 
