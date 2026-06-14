@@ -337,3 +337,40 @@ body {
     font-size: 24px;
   }
 }
+
+/* ===================================================
+   FORM INPUT — CLINICAL DESIGN
+   =================================================== */
+
+.input-clinical {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 12px;
+  background: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-family: 'Geist', 'Inter', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input-clinical:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 108, 73, 0.12);
+}
+
+.input-clinical::placeholder {
+  color: var(--color-on-surface-variant);
+  opacity: 0.6;
+}
+
+.input-clinical:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+select.input-clinical {
+  cursor: pointer;
+}
+
