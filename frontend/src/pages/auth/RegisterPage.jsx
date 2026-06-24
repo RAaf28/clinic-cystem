@@ -26,7 +26,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validations
+    // Validasi
     if (!formData.name || !formData.email || !formData.password || !formData.date_of_birth || !formData.address) {
       setValidationError('Semua kolom wajib diisi');
       return;
@@ -53,13 +53,13 @@ const RegisterPage = () => {
       await register(payload);
       navigate('/login', { state: { message: 'Registrasi berhasil. Silakan login.' } });
     } catch (err) {
-      // Error handled by context
+      // Error ditangani oleh context
     }
   };
 
   return (
     <main className="flex flex-col lg:flex-row min-h-screen bg-canvas-white">
-      {/* Left Side: Editorial Content */}
+      {/* Sisi Kiri: Konten Editorial */}
       <section className="lg:w-1/2 w-full flex flex-col justify-center gallery-airy-padding relative overflow-hidden bg-surface-container-lowest">
         <div className="max-w-[65ch] space-y-12 z-10">
           <h1 className="text-display-lg leading-tight text-on-background">
@@ -77,7 +77,7 @@ const RegisterPage = () => {
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       </section>
 
-      {/* Right Side: Auth Form Container */}
+      {/* Sisi Kanan: Kontainer Form Auth */}
       <section className="lg:w-1/2 w-full flex items-center justify-center gallery-airy-padding bg-background/30">
         <div className="w-full max-w-xl bg-pure-surface rounded-xl border border-whisper-border whisper-shadow p-12 lg:p-16">
           <header className="mb-12">

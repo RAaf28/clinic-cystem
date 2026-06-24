@@ -127,13 +127,13 @@ const MedicinePage = () => {
 
       {/* Search */}
       <div className="relative mb-6 max-w-sm">
-        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-steel-secondary text-[20px]">search</span>
+        <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-steel-secondary text-[20px]">search</span>
         <input
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Cari nama obat..."
-          className="input-clinical pl-12"
+          className="input-clinical pl-12 py-2.5"
         />
       </div>
 

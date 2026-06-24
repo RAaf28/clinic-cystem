@@ -10,7 +10,7 @@ exports.getByMedicalRecord = async (req, res, next) => {
     const conn = await pool.getConnection();
     const [prescriptions] = await conn.query(
       `SELECT pr.id, pr.medical_record_id, pr.quantity, pr.dosage, pr.created_at,
-              m.id as medicine_id, m.name as medicine_name, m.price
+              m.id as medicine_id, m.name as medicine_name, m.price as medicine_price
        FROM prescriptions pr
        JOIN medicines m ON pr.medicine_id = m.id
        WHERE pr.medical_record_id = ?

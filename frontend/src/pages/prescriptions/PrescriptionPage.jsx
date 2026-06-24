@@ -11,7 +11,7 @@ import * as medicineApi from '../../api/medicineApi';
 import { formatRupiah } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
 
-const COLUMNS = ['Rekam Medis', 'Obat', 'Qty', 'Dosis', 'Harga Satuan', 'Aksi'];
+const COLUMNS = ['Rekam Medis', 'Obat', 'Qty', 'Dosis', 'Harga Satuan', 'Total Harga', 'Aksi'];
 
 const PrescriptionPage = () => {
   const { user } = useAuth();
@@ -126,25 +126,48 @@ const PrescriptionPage = () => {
             <tr><td colSpan={COLUMNS.length}>
               <EmptyState icon="medication" message={selectedRecord ? 'Tidak ada resep untuk rekam medis ini.' : 'Pilih rekam medis atau tambah resep baru.'} />
             </td></tr>
-          ) : prescriptions.map(p => (
-            <tr key={p.id} className="hover:bg-surface-container-low/50 transition-colors">
-              <td className="px-6 py-4 text-steel-secondary" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '13px' }}>
-                #MR-{String(p.medical_record_id).padStart(4, '0')}
-              </td>
-              <td className="px-6 py-4 font-bold text-body-md">{p.medicine_name || `Obat #${p.medicine_id}`}</td>
-              <td className="px-6 py-4 text-body-md">{p.quantity}</td>
-              <td className="px-6 py-4 text-body-md text-steel-secondary">{p.dosage || '—'}</td>
-              <td className="px-6 py-4 text-body-md" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-                {p.medicine_price ? formatRupiah(p.medicine_price) : '—'}
-              </td>
-              <td className="px-6 py-4">
-                {(isAdmin || isDokter) && (
-                  <BtnIcon icon="delete" danger title="Hapus resep"
-                    onClick={() => setConfirmDel(p)} />
-                )}
-              </td>
-            </tr>
-          ))}
+          ) : (
+            <>
+              {prescriptions.map(p => (
+                <tr key={p.id} className="hover:bg-surface-container-low/50 transition-colors">
+                  <td className="px-6 py-4 text-steel-secondary" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '13px' }}>
+                    #MR-{String(p.medical_record_id).padStart(4, '0')}
+                  </td>
+                  <td className="px-6 py-4 font-bold text-body-md">{p.medicine_name || `Obat #${p.medicine_id}`}</td>
+                  <td className="px-6 py-4 text-body-md">{p.quantity}</td>
+                  <td className="px-6 py-4 text-body-md text-steel-secondary">{p.dosage || '—'}</td>
+                  <td className="px-6 py-4 text-body-md" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    {p.medicine_price ? formatRupiah(p.medicine_price) : '—'}
+                  </td>
+                  <td className="px-6 py-4 text-body-md font-bold" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    {p.medicine_price ? formatRupiah(p.quantity * p.medicine_price) : '—'}
+                  </td>
+                  <td className="px-6 py-4">
+                    {(isAdmin || isDokter) && (
+                      <BtnIcon icon="delete" danger title="Hapus resep"
+                        onClick={() => setConfirmDel(p)} />
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {/* Footer Total */}
+              {prescriptions.length > 0 && (
+                <tr className="bg-surface-container-low border-t-2 border-whisper-border">
+                  <td colSpan={5} className="px-6 py-4 text-right font-bold text-body-md">
+                    Grand Total
+                  </td>
+                  <td className="px-6 py-4 font-bold text-primary" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '14px' }}>
+                    {formatRupiah(
+                      prescriptions.reduce((sum, p) => 
+                        sum + (p.medicine_price ? p.quantity * p.medicine_price : 0), 0
+                      )
+                    )}
+                  </td>
+                  <td></td>
+                </tr>
+              )}
+            </>
+          )}
         </DataTable>
       </div>
 
