@@ -6,7 +6,7 @@ const NAV_CONFIG = [
   {
     section: 'Utama',
     items: [
-      { icon: 'dashboard', label: 'Dashboard', path: '/dashboard', roles: ['Admin', 'Dokter', 'Pasien'] },
+      { icon: 'dashboard', label: 'Dashboard', path: '/dashboard', roles: ['Admin'] },
       { icon: 'calendar_today', label: 'Janji Temu', path: '/appointments', roles: ['Admin', 'Dokter', 'Pasien'] },
     ],
   },
@@ -106,9 +106,13 @@ const Sidebar = () => {
 
         {/* ── Bottom Section ───────────────────────────── */}
         <div className="mt-auto pt-5 border-t border-whisper-border space-y-3">
-          {/* User Info */}
-          <div className="flex items-center gap-3 px-2">
-            <div className="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold text-sm flex-shrink-0 border border-whisper-border">
+          {/* User Info — clickable to profile */}
+          <Link
+            to="/profile"
+            id="nav-profile"
+            className="flex items-center gap-3 px-2 py-1.5 rounded-xl transition-all duration-200 hover:bg-surface-container-low group"
+          >
+            <div className="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold text-sm flex-shrink-0 border border-whisper-border group-hover:border-primary/30 transition-colors">
               {user?.name?.charAt(0)?.toUpperCase() || 'A'}
             </div>
             <div className="min-w-0">
@@ -117,7 +121,7 @@ const Sidebar = () => {
                 {user?.role || 'Admin'}
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Logout */}
           <button
