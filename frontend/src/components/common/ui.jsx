@@ -27,7 +27,7 @@ export const PaymentBadge = ({ status }) => {
     'Lunas':       'bg-primary/10 text-primary border border-primary/20',
   };
   return (
-    <span className={`px-2.5 py-1 rounded-full text-label-sm uppercase tracking-wider ${map[status] || map['Belum Bayar']}`}
+    <span className={`px-4 py-1 rounded-full text-label-sm uppercase tracking-wider whitespace-nowrap min-w-max ${map[status] || map['Belum Bayar']}`}
       style={{ fontSize: '10px' }}>
       {status}
     </span>

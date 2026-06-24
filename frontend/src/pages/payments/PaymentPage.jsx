@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import * as XLSX from 'xlsx';
 import DashboardLayout from '../../components/common/DashboardLayout';
 import {
   BtnPrimary, BtnIcon, PageHeader, ErrorBanner, EmptyState, DataTable,
@@ -64,8 +65,26 @@ const PaymentPage = () => {
     }
   };
 
-  const filtered = payments.filter(p => !statusFilter || p.payment_status === statusFilter);
+  const handleExportXLS = () => {
+    const data = filtered.map(pay => ({
+      'ID': `PAY-${String(pay.id).padStart(4, '0')}`,
+      'Pasien': pay.patient_name,
+      'Dokter': pay.doctor_name,
+      'Total Tagihan (Rp)': pay.total_amount,
+      'Status': pay.payment_status,
+      'Dibuat': formatDateTime(pay.created_at),
+      'Dibayar': pay.paid_at ? formatDateTime(pay.paid_at) : '-',
+    }));
 
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Pembayaran');
+
+    const fileName = `pembayaran_${statusFilter || 'semua'}_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  };
+
+  const filtered = payments.filter(p => !statusFilter || p.payment_status === statusFilter);
   const belumBayarCount = payments.filter(p => p.payment_status === 'Belum Bayar').length;
 
   return (
@@ -74,11 +93,21 @@ const PaymentPage = () => {
         title="Manajemen Pembayaran"
         subtitle={`${payments.length} transaksi · ${belumBayarCount} belum dibayar`}
         action={
-          <button onClick={fetchData}
-            className="flex items-center gap-2 px-4 py-2 border border-whisper-border rounded-xl text-label-md hover:bg-surface-container-low transition-colors">
-            <span className="material-symbols-outlined text-[18px]">refresh</span>
-            Refresh
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleExportXLS}
+              disabled={filtered.length === 0}
+              className="flex items-center gap-2 px-4 py-2 border border-whisper-border rounded-xl text-label-md hover:bg-surface-container-low transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <span className="material-symbols-outlined text-[18px] text-primary">download</span>
+              Export XLS
+            </button>
+            <button onClick={fetchData}
+              className="flex items-center gap-2 px-4 py-2 border border-whisper-border rounded-xl text-label-md hover:bg-surface-container-low transition-colors">
+              <span className="material-symbols-outlined text-[18px]">refresh</span>
+              Refresh
+            </button>
+          </div>
         }
       />
 
@@ -161,7 +190,7 @@ const PaymentPage = () => {
               <td className="px-6 py-4">
                 {isAdmin && pay.payment_status === 'Belum Bayar' && (
                   <button onClick={() => setConfirmLunas(pay)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white rounded-lg text-label-md spring-interaction hover:bg-on-primary-fixed-variant transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-1.5 bg-primary text-white rounded-lg text-label-md spring-interaction hover:bg-on-primary-fixed-variant transition-colors"
                     style={{ fontSize: '12px' }}>
                     <span className="material-symbols-outlined text-[14px]">check_circle</span>
                     Konfirmasi Lunas

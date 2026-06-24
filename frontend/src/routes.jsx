@@ -11,6 +11,9 @@ import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 // Dashboard
 import DashboardPage from './pages/dashboard/DashboardPage';
 
+// Profile
+import ProfilePage from './pages/profile/ProfilePage';
+
 // Fase 4 Feature Pages
 import AppointmentListPage from './pages/appointments/AppointmentListPage';
 import AppointmentDetailPage from './pages/appointments/AppointmentDetailPage';
@@ -22,18 +25,22 @@ import DoctorPage from './pages/doctors/DoctorPage';
 import PatientPage from './pages/patients/PatientPage';
 
 // ─── Unauthorized Page ────────────────────────────────────────────────────────
-const UnauthorizedPage = () => (
-  <div className="min-h-screen flex items-center justify-center bg-canvas-white">
-    <div className="text-center space-y-4">
-      <span className="material-symbols-outlined text-6xl text-error/50">lock</span>
-      <h1 className="text-headline-lg text-primary" style={{ fontSize: '36px' }}>403</h1>
-      <p className="text-body-md text-steel-secondary">Akses ditolak. Anda tidak memiliki izin untuk halaman ini.</p>
-      <a href="/dashboard" className="inline-block mt-4 px-6 py-2.5 bg-primary text-white rounded-xl text-label-md hover:bg-on-primary-fixed-variant transition-colors">
-        Kembali ke Dashboard
-      </a>
+const UnauthorizedPage = () => {
+  const { user } = useAuth();
+  const backPath = user?.role === 'Admin' ? '/dashboard' : '/appointments';
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-canvas-white">
+      <div className="text-center space-y-4">
+        <span className="material-symbols-outlined text-6xl text-error/50">lock</span>
+        <h1 className="text-headline-lg text-primary" style={{ fontSize: '36px' }}>403</h1>
+        <p className="text-body-md text-steel-secondary">Akses ditolak. Anda tidak memiliki izin untuk halaman ini.</p>
+        <a href={backPath} className="inline-block mt-4 px-6 py-2.5 bg-primary text-white rounded-xl text-label-md hover:bg-on-primary-fixed-variant transition-colors">
+          Kembali
+        </a>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─── Auth Layout (with top Navbar) ───────────────────────────────────────────
 const AuthLayout = ({ children }) => (
@@ -44,8 +51,17 @@ const AuthLayout = ({ children }) => (
 );
 
 // ─── App Routes ───────────────────────────────────────────────────────────────
+// ─── Role-aware default redirect ─────────────────────────────────────────────
+const getDefaultPath = (isAuthenticated, role) => {
+  if (!isAuthenticated) return '/login';
+  if (role === 'Admin') return '/dashboard';
+  return '/appointments';
+};
+
+// ─── App Routes ───────────────────────────────────────────────────────────────
 const AppRoutes = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const role = user?.role;
 
   return (
     <Routes>
@@ -54,7 +70,7 @@ const AppRoutes = () => {
         path="/login"
         element={
           isAuthenticated ? (
-            <Navigate to="/dashboard" replace />
+            <Navigate to={getDefaultPath(true, role)} replace />
           ) : (
             <AuthLayout><LoginPage /></AuthLayout>
           )
@@ -64,7 +80,7 @@ const AppRoutes = () => {
         path="/register"
         element={
           isAuthenticated ? (
-            <Navigate to="/dashboard" replace />
+            <Navigate to={getDefaultPath(true, role)} replace />
           ) : (
             <AuthLayout><RegisterPage /></AuthLayout>
           )
@@ -74,7 +90,7 @@ const AppRoutes = () => {
         path="/forgot-password"
         element={
           isAuthenticated ? (
-            <Navigate to="/dashboard" replace />
+            <Navigate to={getDefaultPath(true, role)} replace />
           ) : (
             <AuthLayout><ForgotPasswordPage /></AuthLayout>
           )
@@ -83,9 +99,14 @@ const AppRoutes = () => {
 
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-      {/* ── Private: All Roles ─────────────────────────── */}
+      {/* ── Private: Admin only ─────────────────────────── */}
       <Route path="/dashboard" element={
-        <PrivateRoute><DashboardPage /></PrivateRoute>
+        <PrivateRoute allowedRoles={['Admin']}><DashboardPage /></PrivateRoute>
+      } />
+
+      {/* ── Profile: All Roles ─────────────────────────── */}
+      <Route path="/profile" element={
+        <PrivateRoute><ProfilePage /></PrivateRoute>
       } />
 
       {/* ── Private: Admin + Dokter + Pasien ───────────── */}
@@ -137,7 +158,7 @@ const AppRoutes = () => {
       {/* ── Default & 404 ───────────────────────────────── */}
       <Route
         path="/"
-        element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />}
+        element={<Navigate to={getDefaultPath(isAuthenticated, role)} replace />}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
