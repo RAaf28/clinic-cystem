@@ -95,8 +95,7 @@ PORT=5000
 Jalankan backend:
 
 ```bash
-npm run dev   # development (nodemon)
-npm start     # production
+node server.js
 ```
 
 ### 3. Setup Frontend
