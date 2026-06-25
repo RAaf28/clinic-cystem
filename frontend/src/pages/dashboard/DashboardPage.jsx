@@ -256,7 +256,7 @@ const DashboardPage = () => {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container rounded-full text-primary text-label-sm">
                 <span className="w-2 h-2 rounded-full bg-primary-container active-dot-pulse" />
-                SYSTEM ACTIVE • BACKEND CONNECTED
+                SYSTEM ACTIVE
               </div>
               <h2 className="text-display-lg tracking-tight leading-tight" style={{ fontSize: '40px' }}>
                 Clinical Operations<br /><span className="text-primary-container">Overview</span>
@@ -298,10 +298,6 @@ const DashboardPage = () => {
                       <p className="text-label-sm text-steel-secondary" style={{ fontSize: '10px' }}>{stat.label}</p>
                     </div>
                   ))}
-                </div>
-                <div className="flex items-center gap-2 bg-pure-surface/80 backdrop-blur rounded-full px-4 py-2 whisper-shadow">
-                  <span className="w-2 h-2 bg-primary-container rounded-full active-dot-pulse" />
-                  <span className="text-label-sm text-primary">Database Terhubung — Data Live</span>
                 </div>
               </div>
             </div>
